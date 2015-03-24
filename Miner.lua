@@ -7,6 +7,13 @@ By Blueberrys
 -- Constants
 --
 
+local root = "blue-miner"
+
+local updateUrl = "https://raw.githubusercontent.com/blueberrys/cc-miner/master/version"
+local updatePath = fs.combine(root, "version")
+
+local settings_file = fs.combine(root, "MinerSettings")
+
 local t = turtle
 
 local items = {
@@ -24,8 +31,6 @@ local items = {
 	bucket = "minecraft:bucket",
 	lava_block = "minecraft:flowing_lava",
 }
-
-local settings_file = "MinerSettings"
 
 
 --
@@ -1403,6 +1408,13 @@ end
 --
 
 local function startup()
+	if b_api then
+		if b_update.checkUpdate(updateUrl, updatePath) then
+			print("Update available")
+			-- TODO: Use updater
+		end
+	end
+
 	if not t then
 		print_ln("Miner can only run on turtles")
 		return
