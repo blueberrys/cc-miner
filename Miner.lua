@@ -19,6 +19,8 @@ local exclFiles = {
 	".gitignore"
 }
 
+local blueApi = "blue-api/init"
+
 
 --
 -- Constants
@@ -1437,7 +1439,11 @@ local function startup()
 
 	-- Uses BlueAPI
 	if not b_api then
-		shell.run("blue-api/init")
+		shell.run(blueApi)
+		if not b_api then
+			print_ln("Miner needs BlueAPI to run")
+			return
+		end
 	end
 
 	if auto_update then
