@@ -16,7 +16,9 @@ local root = "blue-miner"
 local exclFiles = {
 	"README.md",
 	".gitattributes",
-	".gitignore"
+	".gitignore",
+	
+	"pastebin",
 }
 
 local blueApi = "blue-api/init"
