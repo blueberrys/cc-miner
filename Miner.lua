@@ -1446,6 +1446,10 @@ local function startup()
 		end
 	end
 
+	if fs.exists(fs.combine(root, "Miner.lua")) then
+		b_files.trimLuaExtDir(root, true)
+	end
+
 	if auto_update then
 		b_api.load("b_update")
 		b_update.gitUpdate(user, repo, "master", root, exclFiles)
