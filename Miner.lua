@@ -1,16 +1,28 @@
 --[[
 Miner
 By Blueberrys
+
+Requires BlueAPI
+http://pastebin.com/yy7gqfBQ
 ]]
+
+--
+-- GitHub
+--
+
+local user = "blueberrys"
+local repo = "cc-miner"
+local root = "blue-miner"
+local exclFiles = {
+	"README.md",
+	".gitattributes",
+	".gitignore"
+}
+
 
 --
 -- Constants
 --
-
-local root = "blue-miner"
-
-local updateUrl = "https://raw.githubusercontent.com/blueberrys/cc-miner/master/version"
-local updatePath = fs.combine(root, "version")
 
 local settings_file = fs.combine(root, "MinerSettings")
 
@@ -37,10 +49,11 @@ local items = {
 -- Settings
 --
 
-local debug = false
+local auto_update = true
 local aggressive = true
 local neat = true
 local safe = true
+local debug = false
 
 local dim = {
 	main_shaft = {
@@ -87,6 +100,7 @@ local function valid_sett(sett)
 		end
 	end
 
+	sett.auto_update = use_valid(sett.auto_update, auto_update)
 	sett.aggressive = use_valid(sett.aggressive, aggressive)
 	sett.neat = use_valid(sett.neat, neat)
 	sett.safe = use_valid(sett.safe, safe)
@@ -103,6 +117,7 @@ local function init(sett)
 	if (sett) then
 		valid_sett(sett)
 
+		auto_update = sett.auto_update
 		aggressive = sett.aggressive
 		neat = sett.neat
 		safe = sett.safe
@@ -1325,8 +1340,13 @@ local function settings_start()
 	local sett = {}
 
 	clear()
-	print_ln("Setting options:",""
-		, "Aggressive bot? (Attack when blocked)"
+	print_ln("Setting options:","")
+
+	print_ln("Auto update on startup?"
+		, "Current: " .. bool_str(auto_update) .. ")")
+	sett.auto_update = input_bool()
+	
+	print_ln("Aggressive bot? (Attack when blocked)"
 		, "(Current: " .. bool_str(aggressive) .. ")")
 	sett.aggressive = input_bool()
 
@@ -1408,16 +1428,19 @@ end
 --
 
 local function startup()
-	if b_api then
-		if b_update.checkUpdate(updateUrl, updatePath) then
-			print("Update available")
-			-- TODO: Use updater
-		end
-	end
-
 	if not t then
 		print_ln("Miner can only run on turtles")
 		return
+	end
+
+	-- Uses BlueAPI
+	if not b_api then
+		shell.run("blu")
+	end
+	
+	if auto_update then
+	b_api.load("b_update")
+	b_update.gitUpdate(user, repo, "master", root, exclFiles)
 	end
 
 	clear()
