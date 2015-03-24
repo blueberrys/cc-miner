@@ -26,6 +26,9 @@ local blueApi = "blue-api/init"
 -- Constants
 --
 
+local alias = "Miner"
+local selfRun = fs.combine(root, "Miner")
+
 local settings_file = fs.combine(root, "MinerSettings")
 
 local t = turtle
@@ -1446,8 +1449,11 @@ local function startup()
 		end
 	end
 
-	if fs.exists(fs.combine(root, "Miner.lua")) then
+	local luaFile = selfRun .. ".lua"
+	if fs.exists(luaFile) then
+		b_startup.removeAlias(alias, luaFile)
 		b_files.trimLuaExtDir(root, true)
+		b_startup.addAlias(alias, selfRun)
 	end
 
 	if auto_update then
