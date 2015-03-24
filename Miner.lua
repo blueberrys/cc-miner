@@ -1,6 +1,5 @@
 --[[
-Miner - v3.3
-March 20, 2015
+Miner
 By Blueberrys
 ]]
 
@@ -1141,9 +1140,14 @@ end
 -- Stairs Digging Process
 --
 
-local function mine_single_stair()
+local function single_stair_down(torch)
 	force_forward()
 	force_digUp()
+
+	if torch and get.torch() then
+		force_placeUp(max_place_tries)
+	end
+
 	force_down()
 
 	fill_floor()
@@ -1151,12 +1155,10 @@ end
 
 local function stairs_down(steps)
 	for i=1, steps, 1 do
-		mine_single_stair()
-		if (i%3==0) then
+		local turn = i%3==0
+		single_stair_down(turn)
+		if (turn) then
 			t.turnLeft()
-			if get.torch() then
-				force_placeUp(max_place_tries)
-			end
 		end
 	end
 end
