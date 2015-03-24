@@ -1437,7 +1437,7 @@ local function startup()
 
 	-- Uses BlueAPI
 	if not b_api then
-		shell.run("blu")
+		shell.run("blue-api/init")
 	end
 
 	if auto_update then
