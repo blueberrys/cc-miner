@@ -1345,7 +1345,7 @@ local function settings_start()
 	print_ln("Auto update on startup?"
 		, "Current: " .. bool_str(auto_update) .. ")")
 	sett.auto_update = input_bool()
-	
+
 	print_ln("Aggressive bot? (Attack when blocked)"
 		, "(Current: " .. bool_str(aggressive) .. ")")
 	sett.aggressive = input_bool()
@@ -1433,14 +1433,16 @@ local function startup()
 		return
 	end
 
+	load_settings()
+
 	-- Uses BlueAPI
 	if not b_api then
 		shell.run("blu")
 	end
-	
+
 	if auto_update then
-	b_api.load("b_update")
-	b_update.gitUpdate(user, repo, "master", root, exclFiles)
+		b_api.load("b_update")
+		b_update.gitUpdate(user, repo, "master", root, exclFiles)
 	end
 
 	clear()
@@ -1453,8 +1455,6 @@ local function startup()
 		, "- 1-2 Chests"
 		, "- 1-3 Empty Bucket")
 	wait_enter()
-
-	load_settings()
 
 	local function pick_option()
 		local opt
