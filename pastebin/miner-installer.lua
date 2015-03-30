@@ -1,6 +1,6 @@
 --[[
 Blue Miner Installer
-(installer) Version 1.1
+(installer) Version 1.2
 ]]
 
 --[[
@@ -41,6 +41,13 @@ shell.run("pastebin run", ensureBlueApiId, params)
 --	-- Full force install
 --	local blueApiId = "yy7gqfBQ"
 --	shell.run("pastebin run", blueApiId)
+
+--
+
+if not b_api or not b_git or not b_startup then
+	print("Miner requires BlueAPI")
+	return
+end
 
 --
 
