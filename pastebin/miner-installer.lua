@@ -1,7 +1,14 @@
 --[[
 Blue Miner Installer
-(installer) Version 1
-March 23, 2015
+(installer) Version 1.1
+]]
+
+--[[
+Install:
+pastebin run yFhYMM9c
+
+Run:
+Miner
 ]]
 
 local user = "blueberrys"
@@ -11,7 +18,7 @@ local exclFiles = {
 	"README.md",
 	".gitattributes",
 	".gitignore",
-	
+
 	"pastebin"
 }
 
