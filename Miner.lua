@@ -17,7 +17,7 @@ local exclFiles = {
 	"README.md",
 	".gitattributes",
 	".gitignore",
-	
+
 	"pastebin",
 }
 
@@ -1456,6 +1456,7 @@ local function startup()
 		b_startup.removeAlias(alias, luaFile)
 		b_files.trimLuaExtDir(root, true)
 		b_startup.addAlias(alias, selfRun)
+		shell.setAlias(alias, selfRun)
 	end
 
 	if auto_update then
